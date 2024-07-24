@@ -1,0 +1,16 @@
+.book-card-list {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: none; /* For Firefox */
+  }
+  
+  .book-card-list::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+  }
+  
+  .book-card-wrapper {
+    flex: 0 0 auto;
+    margin-right: 40px;
+  }
+  
