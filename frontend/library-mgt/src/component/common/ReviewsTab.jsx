@@ -11,18 +11,22 @@ import {
 } from "../../service/ReviewService";
 import useNotification from "../../hooks/useNotification";
 import Notification from "./Notification";
+import { useNavigate } from "react-router-dom";
 
 const ReviewsTab = ({ bookId, reviews, fetchBookDetail, totalReviews }) => {
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [expanded, setExpanded] = useState({});
   const { showError, showSuccess } = useNotification();
-  const { isLibrarian, user } = useAuth();
+  const navigate = useNavigate();
+  const { isLibrarian, user, isUserAuthenticated } = useAuth();
 
   const [librarian, setLibrarian] = useState(isLibrarian);
+  const [authenticated, setAuthenticated] = useState(isUserAuthenticated);
 
   useEffect(() => {
     setLibrarian(isLibrarian);
-  }, [isLibrarian]);
+    setAuthenticated(isUserAuthenticated);
+  }, [isLibrarian, isUserAuthenticated]);
 
   const [formData, setFormData] = useState({
     rating: 0,
@@ -32,6 +36,8 @@ const ReviewsTab = ({ bookId, reviews, fetchBookDetail, totalReviews }) => {
     rating: 0,
     feedback: "",
   });
+
+  const userId = user ? user.id : null;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -43,6 +49,12 @@ const ReviewsTab = ({ bookId, reviews, fetchBookDetail, totalReviews }) => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if(!authenticated) {
+      navigate('/login');
+      return;
+    }
+
     if (!validateForm()) {
       showError("Vui lòng chọn số sao đánh giá");
       return;
@@ -51,7 +63,7 @@ const ReviewsTab = ({ bookId, reviews, fetchBookDetail, totalReviews }) => {
       const newReview = {
         ...formData,
         bookId: bookId,
-        userId: user.id,
+        userId: userId,
       };
       await addReview(newReview);
       setFormData({ feedback: "", rating: 0 });
@@ -75,7 +87,7 @@ const ReviewsTab = ({ bookId, reviews, fetchBookDetail, totalReviews }) => {
       const updatedReview = {
         ...formEditData,
         bookId: bookId,
-        userId: user.id,
+        userId: userId,
       };
       await updateReview(editingReviewId, updatedReview);
       setFormEditData({ feedback: "", rating: 0 });
@@ -202,7 +214,7 @@ const ReviewsTab = ({ bookId, reviews, fetchBookDetail, totalReviews }) => {
               style={{ border: "none", padding: "0", margin: "10px 0" }}
             >
               <div style={{ marginBottom: "10px" }}>
-                <div
+                <div                      
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
                   <div>
@@ -262,7 +274,7 @@ const ReviewsTab = ({ bookId, reviews, fetchBookDetail, totalReviews }) => {
                       {review.updatedAt}
                     </div>
                   </div>
-                  {user.id === review.memberId && (
+                  {userId === review.memberId && (
                     <div
                       style={{
                         fontSize: "small",

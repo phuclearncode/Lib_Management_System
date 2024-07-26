@@ -63,10 +63,17 @@ const AddMembership = () => {
 
     const validateForm = () => {
         const { nameSubscription, fee_member, maxBook } = formData;
+        const nameSubscriptionPattern = /^[a-zA-Z0-9\s]+$/;
+        if (!nameSubscription || !nameSubscriptionPattern.test(nameSubscription)) {
+            showError('Tên gói sai định dạng');
+            return false;
+        }
         if (nameSubscription != undefined && nameSubscription.trim() === '') {
+            showError('Vui kiểm tra tên gói');
             return false;
         }
         if (parseFloat(fee_member) < 0 || parseFloat(maxBook) < 0) {
+            showError('Giá gói không thể nhỏ hơn hoặc bằng 0');
             return false;
         }
         return true;
@@ -75,7 +82,7 @@ const AddMembership = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) {
-            showError('Vui kiểm tra tên gói hoặc giá không thể nhỏ hơn 0');
+            // showError('Vui kiểm tra tên gói hoặc giá không thể nhỏ hơn 0');
             return;
         }
         console.log(formData);

@@ -310,7 +310,7 @@ const CopiesTab = ({ bookId, bookCopies, fetchBookDetail }) => {
                     </tbody>
                 </Table>
             ) : (
-                <div style={{ fontSize: 'small' }}>Chưa có bản copy nào</div>
+                <div style={{ fontSize: 'small' }}>Chưa có bản sao sách nào</div>
             )}
 
             {/* Edit, Add, Delete Modal */}
@@ -342,7 +342,7 @@ const CopiesTab = ({ bookId, bookCopies, fetchBookDetail }) => {
                         />
                     </>
                 )}
-                {modalType === 'delete' && modalType !== 'return' && <p>Bạn có chắc chắn muốn xóa bản copy này?</p>}
+                {modalType === 'delete' && modalType !== 'return' && <p>Bạn có chắc chắn muốn xóa bản sao sách này?</p>}
                 {modalType === 'return' && <p>Bạn có chắc là muốn trả sách</p>}
             </CustomModal>
         </div>

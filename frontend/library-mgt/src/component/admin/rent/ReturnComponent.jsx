@@ -51,6 +51,8 @@ const ReturnComponent = () => {
                 <Table style={{ fontSize: 'small', boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)" }}>
                     <thead>
                         <tr>
+                            <th>Tên người thuê</th>
+                            <th>Tên sách</th>
                             <th>Mã cho thuê</th>
                             <th>Ngày cho thuê</th>
                             <th>Ngày trả</th>
@@ -62,6 +64,8 @@ const ReturnComponent = () => {
                     <tbody>
                         {rentReturn?.map((r, idx) => (
                             <tr key={idx}>
+                                <td className="align-middle">{r?.userName}</td>
+                                <td className="align-middle">{r?.bookCopyResponse?.title}</td>
                                 <td className="align-middle">{r?.bookCopyResponse?.barcode}</td>
                                 <td className="align-middle">{r?.borrowAt}</td>
                                 <td className="align-middle">{r?.returnAt}</td>

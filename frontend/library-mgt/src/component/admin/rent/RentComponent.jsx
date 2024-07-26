@@ -86,6 +86,7 @@ const RentComponent = () => {
                     <thead>
                         <tr>
                             <th>Tên người thuê</th>
+                            <th>Tên sách</th>
                             <th>Mã cho thuê</th>
                             <th>Ngày cho thuê</th>
                             <th>Ngày trả</th>
@@ -99,6 +100,7 @@ const RentComponent = () => {
                         {rent?.map((r, idx) => (
                             <tr key={idx}>
                                 <td className="align-middle">{r?.userName}</td>
+                                <td className="align-middle">{r?.bookCopyResponse?.title}</td>
                                 <td className="align-middle">{r?.bookCopyResponse?.barcode}</td>
                                 <td className="align-middle">{r?.borrowAt}</td>
                                 <td className="align-middle">{r?.returnAt}</td>
